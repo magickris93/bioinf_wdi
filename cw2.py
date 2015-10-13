@@ -71,7 +71,6 @@ def glosowanie(wyniki):
     :param wyniki: lista liczb
     :rtype : int
     """
-
     if len(wyniki) == 0:
         return None
     else:
