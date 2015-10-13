@@ -62,3 +62,34 @@ def palindrom(s):
         if s[i] != s[-i - 1]:
             ok = False
     return ok
+
+
+def glosowanie(wyniki):
+    """
+    Funkcja sprawdzająca czy w liście o długości N znajduje się taka,
+    która występuje w niej więcej niż N/2 razy
+    :param wyniki: lista liczb
+    :rtype : int
+    """
+
+    if len(wyniki) == 0:
+        return None
+    else:
+        k = wyniki[0]
+        ile = 1
+        for i in range(1, len(wyniki)):
+            if wyniki[i] == k:
+                ile += 1
+            elif ile > 0:
+                ile -= 1
+            else:
+                k = wyniki[i]
+                ile = 1
+        #Jeżeli na liście jest liczba występująca ponad N/2 razy
+        #to jej liczba wystąpień przewyższy liczbę innych liczb.
+        if ile > (len(wyniki) / 2):
+            return k
+        elif wyniki.count(k) > (len(wyniki) / 2):
+            return k
+        else:
+            return None
