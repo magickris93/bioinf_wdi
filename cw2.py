@@ -92,3 +92,38 @@ def glosowanie(wyniki):
             return k
         else:
             return None
+
+
+def trojkaty(czerwone, n):
+    """
+    Funkcja liczy liczbę trójkątów jednokolorowych utworzonych przez
+    odpowiednio pokolorowane krawędzie w grafie nieskierowanym.
+    :param czerwone: lista czerwonych krawędzi
+    :param n: liczba wierzchołków grafu
+    :rtype: int
+    """
+    #Generowanie czarnych krawędzi
+    czarne = [range(n)] * n
+    for i in range(n):
+        czarne[i] = [e for e in czarne[i] if
+                     (e not in czerwone[i]) and (e != i)]
+
+    #Trojkaty to cykle o długości trzy
+
+    ile = 0
+    #Zliczam trojkąty w grafie czarnym
+    for i in range(n):
+        for v in czarne[i]:
+            for k in czarne[v]:
+                if i in czarne[k]:
+                    ile += 1
+
+    #Zliczam trójkąty w grafie czerwonym
+    for i in range(n):
+        for v in czerwone[i]:
+            for k in czerwone[v]:
+                if i in czerwone[k]:
+                    ile += 1
+
+    print ile / 6 #6 = 3! - liczba permutacji 3-cykli
+
