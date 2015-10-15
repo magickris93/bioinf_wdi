@@ -125,5 +125,5 @@ def trojkaty(czerwone, n):
                 if i in czerwone[k]:
                     ile += 1
 
-    print ile / 6 #6 = 3! - liczba permutacji 3-cykli
+    return ile / 6 #6 = 3! - liczba permutacji 3-cykli
 
