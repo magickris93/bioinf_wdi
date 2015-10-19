@@ -10,8 +10,10 @@ def rec_rev(s):
 def rec_pal(s):
 	if len(s) <= 1:
 		return True
+	elif s[0] != s[-1]:
+		return False
 	else:
-		return (s[0] == s[-1]) and (rec_pal(s[1:-1]))
+		return rec_pal(s[1:-1])
 
 
 def rec_find(v, x):
@@ -38,11 +40,39 @@ def iter_merge(l1, l2):
 		res.extend(l1)
 	return res
 
-
-def rek_fib(n):
+def fib(n):
 	if n == 0:
 		return 0
 	elif n == 1:
 		return 1
 	else:
-		
+		return fib(n-2) + fib(n-1)
+
+
+def rek_fib(k, n):
+	s = ""
+	if n == 0:
+		return 0
+	elif n == 1:
+		for i in range(k-1):
+			s += " "
+		if k != 0:
+			s += "+1"
+		print s
+		return 1
+	elif n == 2:
+		for i in range(k-1):
+			s += " "
+		if k != 0:
+			s += "+1"
+		print s
+		return 1
+	else:
+		for i in range(k-1):
+			s += " "
+		if k != 0:
+			s += "+"
+		x = rek_fib(k+1, n-1) + rek_fib(k+1, n-2)
+		s += str(x)
+		print s
+		return x
