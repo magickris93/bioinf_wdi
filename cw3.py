@@ -15,8 +15,8 @@ def rec_rev(s):
 def rec_pal(s):
     """
     Funkcja rekurencyjna sprawdzająca czy s jest palindromem
-	:param s: słowo do sprawdzenia
-	:rtype : bool
+    :param s: słowo do sprawdzenia
+    :rtype : bool
     """
     if len(s) <= 1:
         return True
