@@ -104,3 +104,20 @@ def rek_fib(k, n):
         print s
         return x
 
+
+def p(n, k):
+    """
+    Funkcja licząca ile jest podziałów liczby n na k części (różnych
+    rozkładów n na k sum liczb naturalnych > 0)
+    :param n: liczba do rozłożenia
+    :param k: liczba części
+    :rtype : int
+    """
+    if k == 0 and n == 0:
+        return 1
+    elif n <= 0:
+        return 0
+    elif k <= 0:
+        return 0
+    else:
+        return p(n-k, k) + p(n-1, k-1)
