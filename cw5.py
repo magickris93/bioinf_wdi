@@ -7,9 +7,7 @@ def find_seq(seq, filename):
 		if data[i:len(seq)+i] == seq:
 			pos.append(i)
 	print pos
-	print len(pos
-	
-print find_seq('ACGT', 'DNA.txt')
+	print len(pos)
 
 
 def statystyki(filename):
@@ -31,6 +29,7 @@ def statystyki(filename):
 	
 	f.close()
 	out.close()
+
 	
 def kmers(k, filename):
 	with open(filename, "r") as myfile:
@@ -53,6 +52,22 @@ def kmers(k, filename):
 	print max_key
 
 
-	
-statystyki('DNA.txt')
+def avg_signal(filename):
+	f = open(filename, 'r')
+	count = 0
+	s = 0.0
+	for line in f:
+		l = line.split()
+		if len(l) != 0:
+			if l[0] == '3R':
+				if (int(l[3]) >= 1000000) and (int(l[4]) <= 5000000):	
+					count += 1
+					s += float(l[5])
+	f.close()
+	return s / count
+
+
+
+find_seq('ACGT', 'DNA.txt')				
 kmers(4, 'DNA.txt')
+print avg_signal('HP1b.gff3')
