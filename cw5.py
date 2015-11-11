@@ -58,11 +58,10 @@ def avg_signal(filename):
 	s = 0.0
 	for line in f:
 		l = line.split()
-		if len(l) != 0:
-			if l[0] == '3R':
-				if (int(l[3]) >= 1000000) and (int(l[4]) <= 5000000):	
-					count += 1
-					s += float(l[5])
+		if len(l) == 9:
+			if (int(l[3]) >= 1000000) and (int(l[4]) <= 5000000):	
+				count += 1
+				s += float(l[5])
 	f.close()
 	return s / count
 
