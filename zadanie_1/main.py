@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+__author__ = "Krzysztof Nagrodkiewicz"
 
 def read_reads(in_file):
     """
