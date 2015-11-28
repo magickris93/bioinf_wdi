@@ -3,21 +3,19 @@ def read_reads(plik):
         lines = [line.rstrip('\n').split() for line in f]
     return lines
 
-
 def compute_coverage(odczyty):
     c = {}
     for row in odczyty:
         ci = int(row[0])
-        if int(row[0]) not in c:
+        if ci not in c:
             c[ci] = []
         begin = int(row[1])
         length = int(row[2])
-        for i in range(length-begin+2-len(c[ci])):
+        for i in range(begin+length-len(c[ci])):
             c[ci].append(0)
-        for i in range(begin, length+1):
+        for i in range(begin, begin+length):
             c[ci][i] += 1
     return c
-
 
 def write_coverage(pokrycie, plik_wyjsciowy):
     with open(plik_wyjsciowy, 'w') as f:
@@ -26,21 +24,25 @@ def write_coverage(pokrycie, plik_wyjsciowy):
             begin = 0
             length = 0
             while i < len(pokrycie[c]):
-                if pokrycie[c][i-1] != pokrycie[c][i]:
+                if pokrycie[c][i-1] == pokrycie[c][i]:
+                    length += 1
+                else:
                     if pokrycie[c][i-1] != 0:
                         f.write("{0}\t{1}\t{2}\t{3}\n".format(pokrycie[c][i-1],
-                        c, begin, length+begin+1))
+                                                    c, begin, length+begin+1))
                     begin = i
                     length = 0
-                else:
-                    length += 1
                 i += 1
-        if pokrycie[c][i-1] != 0:
             f.write("{0}\t{1}\t{2}\t{3}\n".format(pokrycie[c][i-1],
-            c, begin, length+begin+1))
+                                        c, begin, length+begin+1))
 
 def multiply_coverage(plikA, plikB, plik_wyjsciowy):
-    return None
-
-# print compute_coverage(read_reads('odczytyA.sdx'))
-write_coverage(compute_coverage(read_reads('odczytyA.sdx')), 'wynikiheheh')
+    c1 = compute_coverage(read_reads(plikA))
+    c2 = compute_coverage(read_reads(plikB))
+    c_res = {}
+    for key in sorted(c1.keys()):
+        res = []
+        for i in range(min(len(c1[key]), len(c2[key]))):
+            res.append(c1[key][i] * c2[key][i])
+        c_res[key] = res[:]
+    write_coverage(c_res, plik_wyjsciowy)
