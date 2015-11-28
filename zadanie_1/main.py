@@ -40,9 +40,10 @@ def multiply_coverage(plikA, plikB, plik_wyjsciowy):
     c1 = compute_coverage(read_reads(plikA))
     c2 = compute_coverage(read_reads(plikB))
     c_res = {}
-    for key in sorted(c1.keys()):
-        res = []
-        for i in range(min(len(c1[key]), len(c2[key]))):
-            res.append(c1[key][i] * c2[key][i])
-        c_res[key] = res[:]
+    for key in sorted(c1):
+        if key in c2:
+            res = []
+            for i in range(min(len(c1[key]), len(c2[key]))):
+                res.append(c1[key][i] * c2[key][i])
+            c_res[key] = res[:]
     write_coverage(c_res, plik_wyjsciowy)
