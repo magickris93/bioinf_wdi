@@ -86,5 +86,3 @@ def multiply_coverage(file_a, file_b, out_file):
                 res.append(c1[key][i] * c2[key][i])
             c_res[key] = res[:]
     write_coverage(c_res, out_file)
-
-multiply_coverage('a', 'b', 'c')
