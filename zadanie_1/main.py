@@ -62,8 +62,9 @@ def write_coverage(coverage, out_file):
                     begin = i
                     length = 0
                 i += 1
-            f.write("{0}\t{1}\t{2}\t{3}\n".format(coverage[c][i-1],
-                                        c, begin, length+begin+1))
+            if len(coverage[c]) != 0:
+                f.write("{0}\t{1}\t{2}\t{3}\n".format(coverage[c][i-1],
+                                            c, begin, length+begin+1))
 
 
 def multiply_coverage(file_a, file_b, out_file):
@@ -85,3 +86,5 @@ def multiply_coverage(file_a, file_b, out_file):
                 res.append(c1[key][i] * c2[key][i])
             c_res[key] = res[:]
     write_coverage(c_res, out_file)
+
+multiply_coverage('a', 'b', 'c')
