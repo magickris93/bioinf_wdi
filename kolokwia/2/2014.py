@@ -78,3 +78,4 @@ def sekwencje(plik):
 						if len(matches[k]) > len(matches[i])*2-2:
 							print line, #na koncu linii jest zbedny \n
 							break
+
