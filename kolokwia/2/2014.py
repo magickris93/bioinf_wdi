@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
 
-
 __author__ = 'kris'
 
 
@@ -72,10 +71,9 @@ def sekwencje(plik):
 			for i in range(len(matches)):
 				for k in range(i+1, len(matches)):
 					if (matches[k][0] == 'T' and matches[i][0] == 'A') \
-					or (matches[k][0] == 'A' and matches[i][0] == 'T') \
-					or (matches[k][0] == 'G' and matches[i][0] == 'C') \
-					or (matches[k][0] == 'C' and matches[i][0] == 'G'):
+							or (matches[k][0] == 'A' and matches[i][0] == 'T') \
+							or (matches[k][0] == 'G' and matches[i][0] == 'C') \
+							or (matches[k][0] == 'C' and matches[i][0] == 'G'):
 						if len(matches[k]) > len(matches[i])*2-2:
 							print line, #na koncu linii jest zbedny \n
 							break
-
