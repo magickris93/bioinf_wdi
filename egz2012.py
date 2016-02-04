@@ -28,7 +28,18 @@ print sum
 # a)'a a bc' | sed 's/\([a-z]\+\) \1 \([a-z]\+\)/\2 \1/'
 # bc a
 
-# ???
+# polecenie sed 's/a/b/x' zamienia wszystko z podanego tekstu co pasuje do wyrazenia regularnego okreslonego przez
+# a na b, przy czym \1 to pierwsza grupa \2 to druga itd. x to flagi wywolania (w tym przypadku nie ma, wiec zostanie
+# zastapione tylko pierwsze odnalezione wyrazenie [gdyby mialybyc wszystkie trzeba uzyc flagi g])
+
+# w tym przypadku szukamy wzorca : mala litera i dowolny znak + mala litera i dowolny znak + mala litera i dowolny znak.
+# \1 w wyrazeniu regularnym powtarza pierwsza grupe (to co w nawiasie czyli ([a-z]\+\)). Natomiast ma to byc zastapione
+# przez druga grupe z wyrazenia regularnego [drugi nawias], czyli napis pasujacy do trzeciego wzorca (mala litera i
+# dowolny znak), w naszym przypadku jest to bc. Otrzymany napis zamieniamy na "bc a " <= \2 \1. 
+
+# do pierwszego wzorca pasuje 'a '
+# do drugiego 'a '
+# do trzeciego 'bc'
 
 # b) echo out1 || echo out2
 # out1
