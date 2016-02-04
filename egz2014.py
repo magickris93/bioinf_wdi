@@ -116,3 +116,70 @@ cat a.txt | cut -d ' ' -f2 | sort -r
 # 4
 # 3
 
+# Zadanie 3
+
+def co_robic(dania, dostepne):
+	res = []
+	for danie in dania:
+		mozna = True
+		for produkt in dania[danie]:
+			if produkt not in dostepne:
+				mozna = False
+		if mozna == True:
+			res.append(danie)
+	return res
+
+# Zadanie 4
+
+def sortuj(slowa, tekst):
+	d = {}
+	for slowo in slowa:
+		d[slowo] = 0
+	for slowo in tekst.rstrip('\n').split():
+		if slowo in d:
+			d[slowo] += 1
+	r = {}
+	for k in d:
+		if d[k] in r:
+			r[d[k]].append(k)
+		else:
+			r[d[k]] = [k]
+	res = []
+	for k in sorted(r.keys()):
+		res.extend(r[k])
+	res.reverse()
+	return res
+
+
+# Zadanie 5
+
+def liczby(tekst):
+	with open(tekst, 'r') as f:
+		data = f.readlines()
+	reg_int = r'\s(\d+)[^.0-9]'
+	reg_float = r'\b(\d+[.]\d+)'
+	i = 0
+	for line in data:
+		row = line.rstrip('\n')
+		ints = re.findall(reg_int, row)
+		floats = re.findall(reg_float, row)
+		if len(floats) % 2 == 0 and len(ints) % 2 == 1:
+			print i, sum(map(int, ints)) - sum(map(float, floats))
+		i += 1
+
+# Zadanie 6
+
+def ladna(l):
+	if len(l) == 0:
+		return True
+	else:
+		down = l[-1][0] + l[-1][1]
+		left = 0
+		right = 0
+		for i in range(len(l)):
+			left += l[i][0]
+			right += l[i][1]
+		if (3*left <= 4*right) and (3*right <= 4*left):
+			return ladna(l[:-1])
+		else:
+			return False
