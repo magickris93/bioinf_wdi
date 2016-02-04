@@ -1,81 +1,65 @@
 # -*- coding: utf-8 -*-
-import re
-
-
 __author__ = 'kris'
+import re
 
 
 # Zadanie 1
 
-
-def is_loop2(filename):
-	moves = {}
-	with open(filename, 'r') as f:
-		for line in f:
-			row = map(int, line.split())
-			first = (row[0], row[1])
-			second = (row[2], row[3])
-			if first not in moves:
-				moves[first] = [second]
-			else:
-				moves[first].append(second)
-
-	for move in moves:
-		for m in moves[move]:
-			if move in moves[m]:
-				return True
-	return False
-
-
-# Zadanie 2
-
 # (a)
 
 '''
-Słownik d wewnątrz funkcji add nie jest związany niczym ze słownikiem d istniejącym
-na zewnątrz funkcji, zatem to wywołanie funkcji da wynik 15 (6 + 9), a d nie ulegnie
-żadnej zmianie tj. pozostanie d = {'a' : 3}.
+Wewnątrz funkcji używamy globalnej zmiennej y, także jej wartość ulegnie
+zmianie po działaniu funkcji f. W wyniku wywołania f(y) otrzymamy 84 (2 * y),
+natomiast y = 4 * y[wyjsciowy], zatem ostatecznie wypisze się 84 168.
 '''
+
 
 # (b)
 
 '''
-Tym razem słownik d będzie ulegał zmianie, gdyż poprzedzono go wewnątrz funkcji słowem
-kluczowym global. Podczas pierwszego wywołania dodajemy nowy klucz - 'la' i jego wartością
-staje się płytka kopia wartości spod klucza 'li'. Następnie modyfikujemy listę spod la poprzez
-dodanie do jej zerowego elementu 1. Ponieważ jest to płytka kopia to zmiana nastąpi również w drugiej
-liście przez co wynikiem pierwszego wywołania jest : d = {'la' : [2,2,3], 'li' : [2,2,3]}.
+Wewnątrz funkcji g używana jest globalna zmienna m, zatem będzie ona ulegać
+zmianie. Podczas pierwszego obrotu m stanie się [2,2,3], natomiast l będzie
+postaci [7,m,9], przy czym m jest płytką kopią listy. Wynikiem będzie zatem
+[7,m,9] + g([7,m]).
 
-Drugie wywołanie wygląda podobnie. Pod wartosc w kluczu 'li' wstawiamy listę li, więc nic sie nie zmienia.
-Następnie dodajemy do jej drugiego elementu 2. Co zmienia nam listę na [2, 4, 3]. Pamiętając, że pod 'la'
-jest kopia listy 'li', ostatecznie otrzymujemy : d = {'la' : [2,4,3], 'li' : [2,4,3]}.
+W drugim wywołaniu funkcji g znowu pierwszy element listy m zwiększony zostanie
+o jeden, przez co m <- [3,2,3]. l nie ulegnie zmianie, bo miało już na drugim
+miejscu płytką kopię m. W wyniku dostaniemy [7,m] + g([7]).
+
+g([7]) = [7]
+
+Zatem ostatecznie otrzymamy [7,m,9] + [7,m] + [7], czyli [7,m,9,7,m,7].
+Wstawiając listę m do listy wynikowej wypisze się ostatecznie:
+[7, [3, 2, 3], 9, 7, [3, 2, 3], 7] [3, 2, 3]
 '''
 
-# (c)
+# Zadanie 2
 
-'''
-Ponieważ listy są obiektami mutowalnymi, to ulegają zmianie poprzez działanie na nich funkcjami.
-Niemniej listy lu nie zmieniamy w żaden sposób ponieważ wewnątrz funkcji liextend używamy głębokiej kopii,
-(używamy li[:-1], czyli kopii bez ostatniego elementu). W przeciwieństwie do poprzednich przykładów jest to
-zupełnie odrębna lista, czyli w efekcie wypisze się napis [1, 2, 3, -3, -2, -1, -3, -2, -3] [-3, -2, -1].
-'''
+def adresy(tekst):
+    name_re = r'([A-Z][a-z]*)[-]?[ ]?([A-Z][a-z]*-)?'
+    nr_re = r'([(][+]\d{2}[)]-)?(\d{3}-\d{3}-\d{3}|\d{2}-\d{3}-\d{2}-\d{2})'
+    mail_re = r'([a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z0-9._]+)'
+
+    numery = []
+    maile = []
+
+    for match in re.finditer(name_re+nr_re, tekst):
+        if match.group(3) is not None:
+            numery.append((match.group(1), match.group(3)+match.group(4)))
+        else:
+            numery.append((match.group(1), '(+48)-'+match.group(4)))
+
+    for match in re.finditer(name_re+mail_re, tekst):
+        maile.append((match.group(1), match.group(3)))
+
+    print numery
+    print maile
+
 
 # Zadanie 3
 
-# Prawdopodobnie da się to zrobić mądrzej XD
 
-def sekwencje(plik):
-	reg = r'[A]{5,}[GCT]|[T]{5,}[GCA]|[G]{5,}[ATC]|[C]{5,}[ATG]'
-	with open(plik, 'r') as f:
-		for line in f:
-			matches = re.findall(reg, line)
-			for i in range(len(matches)):
-				for k in range(i+1, len(matches)):
-					if (matches[k][0] == 'T' and matches[i][0] == 'A') \
-					or (matches[k][0] == 'A' and matches[i][0] == 'T') \
-					or (matches[k][0] == 'G' and matches[i][0] == 'C') \
-					or (matches[k][0] == 'C' and matches[i][0] == 'G'):
-						if len(matches[k]) > len(matches[i])*2-2:
-							print line, #na koncu linii jest zbedny \n
-							break
+
+
+
 
