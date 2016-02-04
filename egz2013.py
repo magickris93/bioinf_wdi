@@ -194,4 +194,4 @@ def plagiat(tekst1, tekst2):
 # cat kierowcy | sort -k +4n | head -5 | awk -F " " '{print $1 " " $3}'
 
 # (c)
-# cat kierowcy | awk -F " " '{print $3 - $2 " " $4}' | sort -k +1n -r | uniq
+# cat kierowcy | awk -F " " '{print $3 - $2 " " $4}' | sort -k +1rn | uniq
